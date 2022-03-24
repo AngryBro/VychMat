@@ -5,17 +5,16 @@ class Matrix {
 				if(arguments.length>=2) {
 					var arr = arguments[1];
 					for(var i = 0; i<arr.length; i++) {
-						if(arr[0].length!=arr[i].length) {
-							return new None('Столбцы разной длины');
+						if((arr[0].length!=arr[i].length)&&(arr[i].length==0)) {
+							console.log('ERROR: Incorrect matrix size');
+							return new Matrix('NaN');
 						}
 					}
 					this.array = arguments[1];
-					/*if(this.array.length*this.array[0].length==1) {
-						return this.array[0][0];
-					}*/
 				}
 				else {
-					return new None('Нет массива элементов матрицы.');
+					console.log('ERROR: No array for matrix');
+					return new Matrix('NaN');
 				}
 				break;
 			}
@@ -33,7 +32,8 @@ class Matrix {
 					}
 					return new Matrix('array',arr);
 				}
-				return new None('Отсутствуют размеры нулевой матрицы.');
+				console.log('ERROR: No size of null-matrix');
+				return new Matrix('NaN');
 			}
 			case '1': {
 				if(arguments.length>=2) {
@@ -48,14 +48,16 @@ class Matrix {
 					}
 					return new Matrix('array',arr);
 				}
-				return new None('Отсутствует размер единичной матрицы.');
+				console.log('ERROR: No size of I matrix');
+				return new Matrix('NaN');
 			}
 			case 'vectors': {
 				if(arguments.length>=2) {
 					for(var i = 1; i<arguments.length; i++) {
 						if((arguments[i].size.n!=1)||
 							(arguments[i].size.m!=arguments[1].size.m)) {
-								return new None('Неверные векторы');
+								console.log('ERROR: Incorrect vectors for matrix');
+								return new Matrix('NaN');
 						}
 					}
 					var arr = []
@@ -64,31 +66,67 @@ class Matrix {
 					}
 					return new Matrix('array',arr);
 				}
-				return new None('Отсутствуют векторы');
+				console.log('ERROR: No vectors for matrix');
+				return new Matrix('NaN');
 			}
 			case 'vector': {
 				if(arguments.length>1) {
 					return new Matrix('array',[arguments[1]]);
 				}
-				return new None('Отсутствует вектор');
+				console.log('ERROR: No vector for matrix');
+				return new Matrix('NaN');
+			}
+			case 'NaN': {
+				return new Matrix('array',[[NaN]]);
 			}
 			default: {
-				return new None('Некорректное задание матрицы');
+				return new Matrix('NaN');
 			}
 		}
 		this.size = {
-			m : this.array[0].length,
-			n: this.array.length,
-			sqr: this.array.length==this.array[0].length
+			m : (this.array[0][0]!=NaN)?this.array[0].length:0,
+			n: (this.array[0][0]!=NaN)?this.array.length:0,
+			sqr: (this.array.length==this.array[0].length)&&(this.array[0][0]!=NaN)
 		};
+	}
+	static input(id) {
+		var rows_raw = document.getElementById(id).value.split('\n');
+		var rows = [];
+		for(var i = 0; i<rows_raw.length;i++) {
+			if(rows_raw[i].replace(/\s+/,"")!="") {
+				rows.push(rows_raw[i]);
+			}
+		}
+		for(var i =0; i<rows.length; i++) {
+			rows[i] = rows[i].split(/\s+/);
+			if(rows[i][0]=="") {
+				rows[i].shift();
+			}
+			if(rows[i].length!=undefined) {
+				for(var j = 0; j<rows[0].length; j++) {
+					rows[i][j] = Number(rows[i][j]);
+				}
+			}
+		}
+		return new Matrix('array',rows).T();
+	}
+	arr() {
+		return JSON.parse(JSON.stringify(this.array));
 	}
 	copy() {
 		return new Matrix('array',JSON.parse(JSON.stringify(this.array)));
 	}
+	vector(i) {
+		if((i<1)||(i>this.size.n)) {
+			console.log('ERROR: Vector\'s index out of range');
+			return new Matrix('NaN');
+		}
+		return new Matrix('vector',this.arr()[i-1]);
+	}
 	raw_tex() {
 		var temp = [];
 		var eps = (arguments.length>0)?arguments[0]:3;
-		var out = new Matrix('array',this.array.slice());
+		var out = new Matrix('array',JSON.parse(JSON.stringify(this.array)));
 		var p = Math.pow(10,eps);
 		for(var i = 0; i<this.size.n; i++) {
 			for(var j = 0; j<this.size.m;j++) {
@@ -102,7 +140,7 @@ class Matrix {
 	}
 	raw_log() {
 		var log = [];
-		for(var i = 0; i<this.size.m; i++) {
+		for(var i = 0; i<this.size.n; i++) {
 			log.push(JSON.stringify(this.array[i]));
 		}
 		console.log(log.join('\n'));
@@ -116,16 +154,16 @@ class Matrix {
 	log() {
 		this.T().raw_log();
 	}
-	getElem(i,j) {
+	get(i,j) {
 		if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
-			console.log('Обращение к несущетсвующему элементу ('+i+','+j+')');
-			return new None('Выход за границы');
+			console.log('ERROR: No element ('+i+','+j+')');
+			return NaN;
 		}
 		return this.array[j-1][i-1];
 	}
-	setElem(i,j,e) {
+	set(i,j,e) {
 		if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
-			console.log('Обращение к несущетсвующему элементу ('+i+','+j+')');
+			console.log('ERROR: No element ('+i+','+j+')');
 		}
 		else {
 			this.array[j-1][i-1] = e;
@@ -157,7 +195,8 @@ class Matrix {
 			var _n_ = this.size.n;
 			var _k_ = m_.size.n;
 			if(_n_!=m_.size.m) {
-				return new None('Перемножение несогласованных матриц');
+				console.log('ERROR: Inconsistent matrices');
+				return new Matrix('NaN');
 			}
 			else {
 				var res = new Matrix('0',_m_,_k_);
@@ -165,9 +204,9 @@ class Matrix {
 					for(var j = 1; j<=_k_; j++) {
 						var ij = 0;
 						for(var k = 1; k<=_n_; k++) {
-							ij += this.getElem(i,k)*m_.getElem(k,j);
+							ij += this.get(i,k)*m_.get(k,j);
 						}
-						res.setElem(i,j,ij);
+						res.set(i,j,ij);
 					}
 				}
 				return res;
@@ -191,7 +230,8 @@ class Matrix {
 	}
 	det() {
 		if(!this.size.sqr) {
-			return new None('Попытка вычисления определителя не квадратной матрицы');
+			console.log('ERROR: Not square matrix');
+			return NaN;
 		}
 		if(this.size.m*this.size.n==1) {
 			return this.array[0][0];
@@ -211,12 +251,13 @@ class Matrix {
 	invert() {
 		var res = new Matrix('0',this.size.m,this.size.n);
 		if(this.size.n!=this.size.m) {
-			return new None('Попытка обратить неквадратную матрицу');
+			console.log('ERROR: Not square matrix');
+			return new Matrix('NaN');
 		}
 		var n = this.size.n;
 		for(var i = 1; i<=n; i++) {
 			for(var j = 1; j<=n; j++) {
-				res.setElem(j,i,this.A(i,j));
+				res.set(j,i,this.A(i,j));
 			}
 		}
 		res = res.mult(1/this.det());
@@ -226,7 +267,8 @@ class Matrix {
 		var m = this.size.m;
 		var n = this.size.n;
 		if(JSON.stringify(s.size)!=JSON.stringify(this.size)) {
-			return new None('Матрицы разных размеров');
+			console.log('ERROR: Different size matrices');
+			return new Matrix('NaN');
 		}
 		var res = this.copy();
 		for(var i = 0; i<n; i++) {
@@ -240,7 +282,8 @@ class Matrix {
 		var m = this.size.m;
 		var n = this.size.n;
 		if(JSON.stringify(s.size)!=JSON.stringify(this.size)) {
-			return new None('Матрицы разных размеров');
+			console.log('ERROR: Different size matrices');
+			return new Matrix('NaN');
 		}
 		var res = this.copy();
 		for(var i = 0; i<n; i++) {
@@ -261,9 +304,22 @@ class Matrix {
 		}
 		return res;
 	}
-}
-class None {
-	constructor(description) {
-		this.description = description;
+	LU() {
+		var A = this.copy();
+		var n = A.size.n;
+		if((A.det()*A.get(1,1)==0)||(!A.size.sqr)) {
+			console.log('No LU view');
+			return new Matrix('NaN');
+		}
+		var L = new Matrix('0',n,n);
+		var U = L.copy();
+		for(var i = 1; i<=n; i++) {
+			for(var j = 1; j<=n; j++) {
+				U.set(i,j,0);
+				L.set(i,j,0);
+			}
+			L.set(i,i,1);
+		}
+		// LU разложение допилить.
 	}
 }

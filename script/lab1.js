@@ -1,47 +1,51 @@
-function get_matrix(id) {
-	var rows = document.getElementById(id).value.split('\n');
-	for(var i =0; i<rows.length; i++) {
-		rows[i] = rows[i].split(' ');
-		if(rows[i].length!=undefined) {
-			for(var j = 0; j<rows[0].length; j++) {
-				rows[i][j] = Number(rows[i][j]);
-			}
-		}
-	}
-	return new Matrix('array',rows).T();
+function check_input(A,b) {
+	return A.size.sqr&&(A.size.m==b.size.m)&&(b.size.n==1)&&(A.det()!=0);
 }
 function go() {
-	/*var A = get_matrix('matrix_A');
-	var b = get_matrix('vector_b');
+	var A = Matrix.input('matrix_A');
+	var b = Matrix.input('vector_b');
+	var M;
+	var M0;
+	var x;
+	if(check_input(A,b)) {
 	var array_for_m = A.copy().array;
-	array_for_m.push(b.array[0]);
-	var M = new Matrix('array',array_for_m);*/
-	var M = get_matrix('matrix_M');
-	var M0 = M.copy();
-	var d = M.getElem(1,1);
+	array_for_m.push(b.copy().array[0]);
+	M = new Matrix('array',array_for_m);
+	//var M = get_matrix('matrix_M');
+	M0 = M.copy();
+	var d = M.get(1,1);
 	for(var i = 1; i<=M.size.n;i++) {
-		M.setElem(1,i,M.getElem(1,i)/d);
+		M.set(1,i,M.get(1,i)/d);
 	}
 	var d;
 	for(var i = 2; i<=M.size.m; i++) {
 		for(var j = 1; j<i; j++) {
-			d = M.getElem(i,j);
+			d = M.get(i,j);
 			for(var k = 1; k<=M.size.n; k++) {
-				M.setElem(i,k,M.getElem(i,k)-d*M.getElem(j,k));
+				M.set(i,k,M.get(i,k)-d*M.get(j,k));
 			}
 		}
-		d = M.getElem(i,i);
+		d = M.get(i,i);
 		for(var j = i; j<=M.size.n; j++) {
-			M.setElem(i,j,M.getElem(i,j)/d);
+			M.set(i,j,M.get(i,j)/d);
 		}
 	}
-	var x = new Matrix('vector',M.copy().array[M.size.n-1]);
+	x = new Matrix('vector',M.copy().array[M.size.n-1]);
 	for(var i = x.size.m; i>=1; i--) {
-		var xi = M.copy().getElem(i,M.size.n);
+		var xi = M.copy().get(i,M.size.n);
 		for(var j = i+1; j<=M.size.m; j++) {
-			xi -= M.copy().getElem(i,j)*x.getElem(j,1);
+			xi -= M.copy().get(i,j)*x.get(j,1);
 		}
-		x.setElem(i,1,xi);
+		x.set(i,1,xi);
 	}
-	document.body.innerHTML += '\\(M_0 = '+M0.tex()+'\\)<br><br>\\(M='+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)'; MathJax.typeset()
+	var x_star = A.invert().mult(b); A.log(); b.log()
+	html = '\\(M_0 = '+M0.tex()+'\\)<br><br>\\(M='+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)';
+	html += '<br><br>Точное решение: \\(x^*=A^{-1}b='+x_star.tex()+'\\)';
+	html += '<br><br>Погрешность: \\(x^*-x='+x_star.dif(x).tex()+'\\)';
+	}
+	else {
+	html = 'Неверные входные данные.';
+	}
+	document.getElementById('output_gaus').innerHTML = html;
+	MathJax.typeset();
 }
