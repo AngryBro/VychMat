@@ -320,6 +320,27 @@ class Matrix {
 			}
 			L.set(i,i,1);
 		}
-		// LU разложение допилить.
+		for(var i=1; i<=n; i++) {
+			for(var j = 1; j<=n; j++) {
+				if(i<=j) {
+					var s = 0
+					for(var k = 1; k<i; k++) {
+						s += L.get(i,k)*U.get(k,j);
+					}
+					U.set(i,j,A.get(i,j)-s);
+				}
+				else {
+					var s = 0
+					for(var k = 1; k<j; k++) {
+						s += L.get(i,k)*U.get(k,j);
+					}
+					L.set(i,j,(A.get(i,j)-s)/U.get(j,j));
+				}
+			}
+		}
+		return {
+			L: L,
+			U: U
+		};
 	}
 }
