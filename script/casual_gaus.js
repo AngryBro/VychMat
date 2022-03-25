@@ -46,6 +46,6 @@ function go() {
 	else {
 	html = 'Неверные входные данные.';
 	}
-	document.getElementById('output_gaus').innerHTML = html;
+	document.getElementById('output').innerHTML = html;
 	MathJax.typeset();
 }

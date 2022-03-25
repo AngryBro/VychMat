@@ -1,19 +1,22 @@
 <html>
 	<head>
-		<title>Лаба 1</title>
+		<title>Калькулятор систем</title>
 		<link rel="stylesheet" href="style.css"></link>
-		<script src="script/matrix.js"></script>
-		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-		<script src="script/lab1.js"></script>
+		<script id="method_script"></script>
+		<script src='script/method_selection.js'></script>
 	</head>
 	<body>
-		<h1><a href='index.html'>Лаба 1</a></h1>
-		<h2>Обычный метод Гаусса</h2>
+		Выбор метода решения системы
+		<select onchange="select_method(this,'method_script')">
+			<option value='no_method.js'>&mdash;</option>
+			<option value='casual_gaus.js'>Обычный метод Гаусса</option>
+			<option value='LU_tranform.js'>Через LU разложение</option>
+		</select><br>
 		Система \(Ax=b\).<br>
 		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle"></textarea><br>
 		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle"></textarea>
 		<!--div>\(M_0=\)  <textarea id='matrix_M' style="width:3cm;height:3cm;vertical-align:middle"></textarea></div-->
 		<br><br><button onclick="go()">Вычислить \(x\)</button><br><br>
-		<div id="output_gaus"></div>
+		<div id="output"></div>
 	</body>
 </html>
