@@ -30,7 +30,7 @@ function LU_transform() {
 		x.set(i,x_i/U.get(i,i));
 	}
 	var html = '\\(A='+A.tex()+'='+L.tex()+'\\cdot '+U.tex()+
-	'\\)<br><br>\\(x='+x.tex()+'\\)<br><br>Точное решение \\(x*=A^{-1}b='+
+	'\\)<br><br>\\(x='+x.tex()+'\\)<br><br>Точное решение \\(x^*=A^{-1}b='+
 	A.invert().mult(b).tex()+'\\)';
 	output.innerHTML = html;
 	MathJax.typeset();
