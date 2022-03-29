@@ -1,7 +1,4 @@
-function check_input(A,b) {
-	return A.size.sqr&&(A.size.m==b.size.m)&&(b.size.n==1)&&(A.det()!=0);
-}
-function go() {
+function casual_gaus() {
 	var A = Matrix.input('matrix_A');
 	var b = Matrix.input('vector_b');
 	var M;
@@ -41,7 +38,6 @@ function go() {
 	var x_star = A.invert().mult(b); A.log(); b.log()
 	html = '\\(M_0 = '+M0.tex()+'\\)<br><br>\\(M='+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)';
 	html += '<br><br>Точное решение: \\(x^*=A^{-1}b='+x_star.tex()+'\\)';
-	html += '<br><br>Погрешность: \\(x^*-x='+x_star.dif(x).tex()+'\\)';
 	}
 	else {
 	html = 'Неверные входные данные.';

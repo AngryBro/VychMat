@@ -3,22 +3,24 @@
 		<title>Калькулятор систем</title>
 		<link rel="stylesheet" href="style.css"></link>
 		<script src='script/casual_gaus.js'></script>
-		<script src='script/LU_tranform.js'></script>
+		<script src='script/LU_transform.js'></script>
+		<script src='script/matrix.js'></script>
 		<script src='script/method_selection.js'></script>
+		<script src='script/check_input.js'></script>
 		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
 	<body>
-		Выбор метода решения системы
-		<select onchange="select_method(this,'method_script')">
-			<option value='no_method'>&mdash;</option>
-			<option value='casual_gaus()'>Обычный метод Гаусса</option>
-			<option value='LU_tranform()'>Через LU разложение</option>
-		</select><br>
 		Система \(Ax=b\).<br>
-		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle"></textarea><br>
+		Метод решения:
+		<select onchange="select_method(this,'button')">
+			<option value=''>&mdash;</option>
+			<option value='casual_gaus()'>Обычный метод Гаусса</option>
+			<option value='LU_transform()'>Через LU разложение</option>
+		</select><br><br>
+		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle"></textarea>
 		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle"></textarea>
 		<!--div>\(M_0=\)  <textarea id='matrix_M' style="width:3cm;height:3cm;vertical-align:middle"></textarea></div-->
-		<br><br><button onclick="">Вычислить \(x\)</button><br><br>
+		<br><br><button id='button' onclick="">Вычислить \(x\)</button><br><br>
 		<div id="output"></div>
 	</body>
 </html>

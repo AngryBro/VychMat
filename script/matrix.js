@@ -155,18 +155,56 @@ class Matrix {
 		this.T().raw_log();
 	}
 	get(i,j) {
-		if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
-			console.log('ERROR: No element ('+i+','+j+')');
-			return NaN;
+		switch(arguments.length) {
+			case 1: {
+				if((i<1)||(i>this.size.m)||(this.size.n!=1)) {
+					console.log('ERROR: vector-get element '+i);
+					return NaN;
+				}
+				else {
+					return this.array[0][i-1];
+				}
+				break;
+			}
+			case 2: {
+				if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
+					console.log('ERROR: matrix-get element ('+i+','+j+')');
+					return NaN;
+				}
+				else {
+					return this.array[j-1][i-1];
+				}
+				break;
+			}
+			default: {
+				console.log('ERROR: invalid arguments in \'get()\'');
+				return NaN;
+			}
 		}
-		return this.array[j-1][i-1];
 	}
 	set(i,j,e) {
-		if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
-			console.log('ERROR: No element ('+i+','+j+')');
-		}
-		else {
-			this.array[j-1][i-1] = e;
+		switch(arguments.length) {
+			case 2: {
+				if((i<1)||(i>this.size.m)||(this.size.n!=1)) {
+					console.log('ERROR: vector-set element '+i);
+				}
+				else {
+					this.array[0][i-1] = j;
+				}
+				break;
+			}
+			case 3: {
+				if((i<1)||(j<1)||(i>this.size.m)||(j>this.size.n)) {
+					console.log('ERROR: matrix-set element ('+i+','+j+')');
+				}
+				else {
+					this.array[j-1][i-1] = e;
+				}
+				break;
+			}
+			default: {
+				console.log('ERROR: invalid arguments in \'set()\'');
+			}
 		}
 	}
 	T() {
