@@ -110,6 +110,43 @@ class Matrix {
 		}
 		return new Matrix('array',rows).T();
 	}
+	static random() {
+		switch(arguments.length) {
+			case 0: {
+				return new Matrix('vector',[Math.random(),Math.random()]);
+				break;
+			}
+			case 5: {
+				var m = arguments[0];
+				var n = arguments[1];
+				var a = arguments[2];
+				var b = arguments[3];
+				var p = Math.pow(10,arguments[4]);
+				var M = new Matrix('0',m,n);
+				for(var i = 1; i<=m; i++) {
+					for(var j = 1; j<=n; j++) {
+						M.set(i,j,Math.round(p*(Math.random()*(b-a)+a))/p);
+					}
+				}
+				return M;
+				break;
+			}
+			default: {
+				console.log('Invalid arguments in \'random()\'');
+				return new Matrix('NaN');
+				break;
+			}
+		}
+	}
+	toStr() {
+		var M = this.T();
+		var str = [];
+		for(var i = 0;i<this.size.n; i++) {
+			str.push(this.array[i].join(' '));
+		}
+		str = str.join('\n');
+		return str;
+	}
 	arr() {
 		return JSON.parse(JSON.stringify(this.array));
 	}
