@@ -1,12 +1,25 @@
 <html>
 	<head>
-		<title>Лабы выч.мат.</title>
+		<title>Калькулятор систем</title>
 		<link rel="stylesheet" href="style.css"></link>
+		<script src='script/casual_gaus.js'></script>
+		<script src='script/LU_transform.js'></script>
+		<script src='script/matrix.js'></script>
+		<script src='script/method_selection.js'></script>
+		<script src='script/check_input.js'></script>
+		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
 	<body>
-		<h1>Лабораторные работы по вычистительной математике</h1>
-		<ol>
-			<li><a href="casual_gaus.html">???</a></li>
-		</ol>
+		Система \(Ax=b\).<br>
+		Метод решения:
+		<select onchange="select_method(this,'button')">
+			<option value=''>&mdash;</option>
+			<option value='casual_gaus()'>Обычный метод Гаусса</option>
+			<option value='LU_transform()'>Через LU разложение</option>
+		</select><br><br>
+		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		<br><br><button id='button' onclick="">Вычислить \(x\)</button><br><br>
+		<div id="output"></div>
 	</body>
 </html>
