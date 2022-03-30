@@ -450,6 +450,34 @@ class Matrix {
 		}
 		return res;
 	}
+	eq(M) {
+		if(JSON.stringify(this.size)!=JSON.stringify(M.size)) {
+			return false;
+		}
+		for(var i = 0; i<this.array.length; i++) {
+			for(var j = 0; j<this.array[0].length; j++) {
+				if(this.array[i][j]!=M.array[i][j]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	Ceq(M) {
+		M = M.toComplex();
+		var t = this.toComplex();
+		if(JSON.stringify(t.size)!=JSON.stringify(M.size)) {
+			return false;
+		}
+		for(var i = 0; i<t.array.length; i++) {
+			for(var j = 0; j<t.array[0].length; j++) {
+				if(!t.array[i][j].eq(M.array[i][j])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	LU() {
 		var A = this.copy();
 		var n = A.size.n;

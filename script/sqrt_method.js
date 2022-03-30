@@ -1,5 +1,11 @@
 function sqrt_method() {
+	var output = document.getElementById('output');
 	var C = Matrix.input('matrix_A');
+	if(!C.eq(C.T())) {
+		output.innerHTML = 'Матрица не симметричная';
+		console.log('Not symmetry matrix');
+		return;
+	}
 	var b = Matrix.input('vector_b');
 	if(!check_input(C,b)) {
 		output.innerHTML = 'Данные некорректны.';
@@ -43,6 +49,6 @@ function sqrt_method() {
 	'\\('+S.T().Ctex()+'\\cdot y='+b.tex()+' ~~~\\Rightarrow~~~ y = '+y.Ctex()+'\\)<br><br>'
 	+'\\('+S.Ctex()+'\\cdot x ='+y.Ctex()+'~~~\\Rightarrow~~~ x = '+x.Ctex()+'\\)<br><br>'+
 	'Точное решение \\(x^*=A^{-1}b = '+C.invert().mult(b).tex()+'\\)';
-	document.getElementById('output').innerHTML = html;
+	output.innerHTML = html;
 	MathJax.typeset();
 }
