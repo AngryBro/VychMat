@@ -36,7 +36,7 @@ function casual_gaus() {
 		x.set(i,1,xi);
 	}
 	var x_star = A.invert().mult(b); A.log(); b.log()
-	html = '\\(M = '+M0.tex()+'~\\tilde~~'+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)';
+	html = '\\(M = '+M0.tex()+'~\\sim ~~'+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)';
 	html += '<br><br>Точное решение: \\(x^*=A^{-1}b='+x_star.tex()+'\\)';
 	}
 	else {

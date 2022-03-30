@@ -23,9 +23,14 @@ class Complex {
 		this.Im = y;
 	}
 	sqrt() {
-		var r = Math.sqrt(Math.sqrt(this.Re*this.Re+this.Im*this.Im));
-		var phi = Math.atan(this.Im/this.Re)/2;
-		return new Complex(r*Math.cos(phi),r*Math.sin(phi));
+		if(this.Im==0) {
+			if(this.Re>=0) {
+				return new Complex(Math.sqrt(this.Re),0);
+			}
+			return new Complex(0,Math.sqrt(-this.Re));
+		}
+		console.log('AAAAAAAA');
+		return NaN;
 	}
 	static to(x) {
 		if(!isNaN(x)) {
@@ -55,8 +60,18 @@ class Complex {
 	dif(s) {
 		return new Complex(this.Re-s.Re,this.Im-s.Im);
 	}
+	eq(s) {
+		return (this.Re==s.Re)&&(this.Im==s.Im);
+	}
 	toStr() {
-		return String(this.Re)+String(this.Im<0?this.Im:'+'+this.Im)+'i';
+		if(this.Im==0) {
+			return String(this.Re);
+		}
+		var im = Math.abs(this.Im)==1?(this.Im==1?'i':'-i'):this.Im+'i';
+		if(this.Re==0) {
+			return im;
+		}
+		return this.Re+(this.Im>0?'+':'')+im;
 	}
 	log() {
 		console.log(this.toStr());

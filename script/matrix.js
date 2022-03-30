@@ -188,6 +188,26 @@ class Matrix {
 		}
 		return this.T().raw_tex();
 	}
+	Ctex() {
+		var cpy = this.copy().T();
+		var temp = [];
+		var p = Math.pow(10,arguments.length>0?arguments[0]:3);
+		for(var i = 0; i<cpy.array.length; i++) {
+			for(var j = 0; j<cpy.array[0].length; j++) {
+				cpy.array[i][j] = Complex.to(cpy.array[i][j]);
+				cpy.array[i][j].Re = Math.round(cpy.array[i][j].Re*p)/p;
+				cpy.array[i][j].Im = Math.round(cpy.array[i][j].Im*p)/p;
+			}
+		}
+		for(var i = 0; i<cpy.array.length; i++) {
+			for(var j = 0; j<cpy.array[0].length; j++) {
+				cpy.array[i][j] = Complex.to(cpy.array[i][j]).toStr();
+			}
+			temp.push(cpy.array[i].join(' & '));
+		}
+		temp = temp.join(' \\\\ ');
+		return '\\begin{pmatrix} '+temp+'\\end{pmatrix}';
+	}
 	Clog() {
 		var cpy = this.copy();
 		for(var i = 0; i<cpy.array.length; i++) {
@@ -296,6 +316,15 @@ class Matrix {
 				return res;
 			}
 		}
+	}
+	toComplex() {
+		var t = this.copy();
+		for(var i = 0; i<t.array.length; i++) {
+			for(var j = 0; j<t.array[0].length; j++) {
+				t.array[i][j] = Complex.to(t.array[i][j]);
+			}
+		}
+		return t;
 	}
 	Cmult(m_) {
 			var _m_ = this.size.m;

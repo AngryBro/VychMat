@@ -13,24 +13,13 @@ function LU_transform() {
 	var n = A.size.n;
 	var x = new Matrix('0',n,1);
 	var y = x.copy();
-	y.set(1,b.get(1));
-	for(var i = 2; i<=n; i++) {
-		var y_i = b.get(i);
-		for(var j = 1; j<i; j++) {
-			y_i -= L.get(i,j)*y.get(j);
-		}
-		y.set(i,y_i);
-	}
-	x.set(n,y.get(n)/U.get(n,n));
-	for(var i = n-1; i>0; i--) {
-		var x_i = y.get(i);
-		for(var j = n; j>i; j--) {
-			x_i -= x.get(j)*U.get(i,j);
-		}
-		x.set(i,x_i/U.get(i,i));
-	}
+	y = solve_triangle(L,b);
+	x = solve_triangle(U,y);
 	var html = '\\(A='+A.tex()+'='+L.tex()+'\\cdot '+U.tex()+
-	'\\)<br><br>\\(x='+x.tex()+'\\)<br><br>Точное решение \\(x^*=A^{-1}b='+
+	'\\)<br><br>'+
+	'\\('+L.tex()+'\\cdot y ='+b.tex()+'~~~\\Rightarrow ~~~ y ='+y.tex()+'\\)<br><br>'+
+	'\\('+U.tex()+'\\cdot x ='+y.tex()+'~~~\\Rightarrow ~~~ x='+x.tex()+
+	'\\)<br><br>Точное решение \\(x^*=A^{-1}b='+
 	A.invert().mult(b).tex()+'\\)';
 	output.innerHTML = html;
 	MathJax.typeset();
