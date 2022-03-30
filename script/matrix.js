@@ -188,6 +188,15 @@ class Matrix {
 		}
 		return this.T().raw_tex();
 	}
+	Clog() {
+		var cpy = this.copy();
+		for(var i = 0; i<cpy.array.length; i++) {
+			for(var j = 0; j<cpy.array[0].length; j++) {
+				cpy.array[i][j] = Complex.to(cpy.array[i][j]).toStr();
+			}
+		}
+		cpy.log();
+	}
 	log() {
 		this.T().raw_log();
 	}
@@ -287,6 +296,39 @@ class Matrix {
 				return res;
 			}
 		}
+	}
+	Cmult(m_) {
+			var _m_ = this.size.m;
+			var _n_ = this.size.n;
+			var _k_ = m_.size.n;
+			if(_n_!=m_.size.m) {
+				console.log('ERROR: Inconsistent matrices');
+				return new Matrix('NaN');
+			}
+			else {
+				var A = this.copy();
+				for(var i = 1; i<=_m_; i++) {
+					for(var j = 1; j<=_n_; j++) {
+						A.set(i,j,Complex.to(A.get(i,j)));
+					}
+				}
+				for(var i = 1; i<=_n_; i++) {
+					for(var j = 1; j<=_k_; j++) {
+						m_.set(i,j,Complex.to(m_.get(i,j)));
+					}
+				}
+				var res = new Matrix('0',_m_,_k_);
+				for(var i = 1; i<=_m_; i++) {
+					for(var j = 1; j<=_k_; j++) {
+						var ij = new Complex();
+						for(var k = 1; k<=_n_; k++) {
+							ij = ij.sum(A.get(i,k).mult(m_.get(k,j)));
+						}
+						res.set(i,j,ij);
+					}
+				}
+				return res;
+			}
 	}
 	minor_matrix(_j,_i) {
 		var arr = [];
