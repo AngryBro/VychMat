@@ -483,7 +483,10 @@ class Matrix {
 		var n = A.size.n;
 		if((A.det()*A.get(1,1)==0)||(!A.size.sqr)) {
 			console.log('No LU view');
-			return new Matrix('NaN');
+			return {
+				L: new Matrix('NaN');
+				U: new Matrix('NaN');
+			}
 		}
 		var L = new Matrix('0',n,n);
 		var U = L.copy();
@@ -516,5 +519,17 @@ class Matrix {
 			L: L,
 			U: U
 		};
+	}
+	QR() {
+		var P = [null];
+		var A = [this.copy()];
+		var n = this.size.n;
+		if((!this.size.sqr)||(this.det()==0)) {
+			console.log('No QR view');
+			return {
+				Q: new Matrix('NaN');
+				R: new Matrix('NaN');
+			}
+		}
 	}
 }
