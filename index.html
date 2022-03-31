@@ -18,10 +18,12 @@
 		Метод решения:
 		<select onchange="select_method(this,'button','random')">
 			<option value=''>&mdash;</option>
-			<option value='casual_gaus()'>Обычный метод Гаусса</option>
-			<option value='LU_transform()'>Через LU разложение</option>
-			<option value='sqrt_method()'>Метод квадратного корня</option>
+			<option value='casual_gaus(digits.value)'>Обычный метод Гаусса</option>
+			<option value='LU_transform(digits.value)'>Через LU разложение</option>
+			<option value='sqrt_method(digits.value)'>Метод квадратного корня</option>
 		</select><br><br>
+		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width=1cm" type="number" id="digits" value="3">
+		</textarea><br><br>
 		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		<button id='random' onclick="">random()</button>
