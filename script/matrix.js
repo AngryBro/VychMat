@@ -484,9 +484,9 @@ class Matrix {
 		if((A.det()*A.get(1,1)==0)||(!A.size.sqr)) {
 			console.log('No LU view');
 			return {
-				L: new Matrix('NaN');
-				U: new Matrix('NaN');
-			}
+				L: new Matrix('NaN'),
+				U: new Matrix('NaN')
+			};
 		}
 		var L = new Matrix('0',n,n);
 		var U = L.copy();
@@ -527,9 +527,20 @@ class Matrix {
 		if((!this.size.sqr)||(this.det()==0)) {
 			console.log('No QR view');
 			return {
-				Q: new Matrix('NaN');
-				R: new Matrix('NaN');
-			}
+				Q: new Matrix('NaN'),
+				R: new Matrix('NaN')
+			};
 		}
+	}
+	norm() {
+		var m = 0;
+		for(var i = 1; i<=this.size.m; i++) {
+			var s = 0
+			for(var j = 1; j<= this.size.n; j++) {
+				s += Math.abs(this.get(i,j));
+			}
+			m = s>m?s:m;
+		}
+		return m;
 	}
 }

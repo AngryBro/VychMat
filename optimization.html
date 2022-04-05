@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Оптимизация</title>
+		<link rel="stylesheet" href="style.css"></link>
+		<script src='script/matrix.js'></script>
+		<script src='script/check_input.js'></script>
+		<script src='script/random_input.js'></script>
+		<script src='script/local_min.js'></script>
+		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		
+		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width=1cm" type="number" id="digits" value="3">
+		</textarea><br><br>
+		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		<button id='random' onclick="random_symmetry_pd('matrix_A','vector_b',20)">random()</button>
+		<br><br><button id='button' onclick="grad(f,df,1,0.1);newton()">Вычислить \(x_{min}\)</button><br><br>
+		Методом градиентного спуска
+		<div id="grad"></div><br>
+		Методом Ньютона
+		<div id="newton"></div>
+	</body>
+</html>
