@@ -524,10 +524,12 @@ class Matrix {
 		var n = this.size.n;
 		var p = [];
 		var P = [];
+		var Q = new Matrix('1',n,n);
 		P.length = n;
 		p.length = n;
-		var A = [this.copy()];
+		var A = [];
 		A.length = n;
+		A[0] = this.copy();
 		var n = this.size.n;
 		if((!this.size.sqr)||(this.det()==0)) {
 			console.log('No QR view');
@@ -547,11 +549,11 @@ class Matrix {
 			p[k].set(k,A[k-1].get(k,k)+(A[k-1].get(k,k)<0?-1:1)*s);
 			for(var l = k+1; l<=n; l++) {
 				p[k].set(l,A[k-1].get(l,k));
-			}
+			} // до сюда верно
 			var normp = 0;
 			for(var l = k; l<=n; l++) {
 				normp += p[k].get(l)*p[k].get(l);
-			}/*
+			}
 			A[k].set(k,k, (A[k-1].get(k,k)<0?1:-1)*s);
 			for(var j = k+1; j<=n; j++) {
 				var sum = 0;
@@ -561,16 +563,24 @@ class Matrix {
 				for(var i = k; i<=n; i++) {
 					A[k].set(i,j,A[k-1].get(i,j)-2*p[k].get(i)*sum/normp);
 				}
-			}*/
+			}
+			for(var i = 1; i<k; i++) {
+				for(var j = 1; j<=n; j++) {
+					A[k].set(i,j,A[k-1].get(i,j));
+				}
+			}
 			P[k] = new Matrix('0',n,n);
 			for(var i = 1; i<=n; i++) {
 				for(var j = 1; j<=n; j++) {
 					P[k].set(i,j,(i!=j?0:1)-2*p[k].get(i)*p[k].get(j)/normp);
 				}
 			}
-			A[k] = P[k].mult(A[k-1]);
+			Q = P[k].mult(Q);
 		}
-		A[A.length-1].log()
+		return {
+			Q: Q.T(),
+			R: A[A.length-1]
+		};
 	}
 	norm() {
 		var m = 0;
