@@ -521,8 +521,13 @@ class Matrix {
 		};
 	}
 	QR() {
-		var P = [null];
+		var n = this.size.n;
+		var p = [];
+		var P = [];
+		P.length = n;
+		p.length = n;
 		var A = [this.copy()];
+		A.length = n;
 		var n = this.size.n;
 		if((!this.size.sqr)||(this.det()==0)) {
 			console.log('No QR view');
@@ -531,6 +536,41 @@ class Matrix {
 				R: new Matrix('NaN')
 			};
 		}
+		for(var k = 1; k<n; k++) {
+			A[k] = new Matrix('0',n,n);
+			p[k] = new Matrix('0',n,1);
+			var s = 0;
+			for(var l = k; l<=n; l++) {
+				s += A[k-1].get(l,k)*A[k-1].get(l,k);
+			}
+			s = Math.sqrt(s);
+			p[k].set(k,A[k-1].get(k,k)+(A[k-1].get(k,k)<0?-1:1)*s);
+			for(var l = k+1; l<=n; l++) {
+				p[k].set(l,A[k-1].get(l,k));
+			}
+			var normp = 0;
+			for(var l = k; l<=n; l++) {
+				normp += p[k].get(l)*p[k].get(l);
+			}/*
+			A[k].set(k,k, (A[k-1].get(k,k)<0?1:-1)*s);
+			for(var j = k+1; j<=n; j++) {
+				var sum = 0;
+				for(var l = k; l<=n; l++) {
+					sum += p[k].get(l)*A[k-1].get(l,j)
+				}
+				for(var i = k; i<=n; i++) {
+					A[k].set(i,j,A[k-1].get(i,j)-2*p[k].get(i)*sum/normp);
+				}
+			}*/
+			P[k] = new Matrix('0',n,n);
+			for(var i = 1; i<=n; i++) {
+				for(var j = 1; j<=n; j++) {
+					P[k].set(i,j,(i!=j?0:1)-2*p[k].get(i)*p[k].get(j)/normp);
+				}
+			}
+			A[k] = P[k].mult(A[k-1]);
+		}
+		A[A.length-1].log()
 	}
 	norm() {
 		var m = 0;
