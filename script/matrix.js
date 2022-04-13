@@ -154,11 +154,35 @@ class Matrix {
 		return new Matrix('array',JSON.parse(JSON.stringify(this.array)));
 	}
 	vector(i) {
-		if((i<1)||(i>this.size.n)) {
+		var t = this.copy();
+		if((i<1)||(i>t.size.n)) {
 			console.log('ERROR: Vector\'s index out of range');
 			return new Matrix('NaN');
 		}
-		return new Matrix('vector',this.arr()[i-1]);
+		return new Matrix('vector',t.arr()[i-1]);
+	}
+	pop(i) {
+		if((this.size.m<2)||(this.size.n!=1)) {
+			console.log('Non-vector matrix has not pop()');
+			return undefined;
+		}
+		if(i>this.size.m) {
+			console.log('Pop index is out of range');
+			return undefined;
+		}
+		var v = [];
+		var elem;
+		for(var j = 0; j<this.array[0].length; j++) {
+			if(i!=j+1) {
+				v.push(this.array[0][j]);
+			}
+			else {
+				elem = this.array[0][j];
+			}
+		}
+		this.array = [v];
+		this.size.m--;
+		return elem;
 	}
 	raw_tex() {
 		var temp = [];
