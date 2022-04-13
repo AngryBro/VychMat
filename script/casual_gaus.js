@@ -1,4 +1,5 @@
-function casual_gaus() {
+function casual_gaus(digits) {
+	digits = digits<3?3:Math.round(digits);
 	var A = Matrix.input('matrix_A');
 	var b = Matrix.input('vector_b');
 	var M;
@@ -35,9 +36,9 @@ function casual_gaus() {
 		}
 		x.set(i,1,xi);
 	}
-	var x_star = A.invert().mult(b); A.log(); b.log()
-	html = '\\(M = '+M0.tex()+'~\\sim ~~'+M.tex()+'\\)<br><br>\\(~~~x ='+x.tex()+'\\)';
-	html += '<br><br>Точное решение: \\(x^*=A^{-1}b='+x_star.tex()+'\\)';
+	var x_star = A.invert().mult(b);
+	html = '\\(M = '+M0.tex(digits)+'~\\sim ~~'+M.tex(digits)+'\\)<br><br>\\(~~~x ='+x.tex(digits)+'\\)';
+	html += '<br><br>Точное решение: \\(x^*=A^{-1}b='+x_star.tex(digits)+'\\)';
 	}
 	else {
 	html = 'Неверные входные данные.';

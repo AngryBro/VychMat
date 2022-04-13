@@ -1,4 +1,5 @@
-function LU_transform() {
+function LU_transform(digits) {
+	digits = digits<3?3:Math.round(digits);
 	var A = Matrix.input('matrix_A');
 	var b = Matrix.input('vector_b');
 	var output = document.getElementById('output');
@@ -15,12 +16,12 @@ function LU_transform() {
 	var y = x.copy();
 	y = solve_triangle(L,b);
 	x = solve_triangle(U,y);
-	var html = '\\(A='+A.tex()+'='+L.tex()+'\\cdot '+U.tex()+
-	'\\)<br><br>'+
-	'\\('+L.tex()+'\\cdot y ='+b.tex()+'~~~\\Rightarrow ~~~ y ='+y.tex()+'\\)<br><br>'+
-	'\\('+U.tex()+'\\cdot x ='+y.tex()+'~~~\\Rightarrow ~~~ x='+x.tex()+
+	var html = '\\(A='+A.tex(digits)+',~~~b='+b.tex(digits)+'\\)<br><br>'+
+	'\\(A ='+L.tex(digits)+'\\cdot '+U.tex(digits)+'\\)<br><br>'+
+	'\\('+L.tex(digits)+'\\cdot y ='+b.tex(digits)+'~~~\\Rightarrow ~~~ y ='+y.tex(digits)+'\\)<br><br>'+
+	'\\('+U.tex(digits)+'\\cdot x ='+y.tex(digits)+'~~~\\Rightarrow ~~~ x='+x.tex(digits)+
 	'\\)<br><br>Точное решение \\(x^*=A^{-1}b='+
-	A.invert().mult(b).tex()+'\\)';
+	A.invert().mult(b).tex(digits)+'\\)';
 	output.innerHTML = html;
 	MathJax.typeset();
 }

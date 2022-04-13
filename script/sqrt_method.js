@@ -1,5 +1,6 @@
-function sqrt_method() {
+function sqrt_method(digits) {
 	var output = document.getElementById('output');
+	digits = digits<3?3:Math.round(digits);
 	var C = Matrix.input('matrix_A');
 	if(!C.eq(C.T())) {
 		output.innerHTML = 'Матрица не симметричная';
@@ -45,10 +46,10 @@ function sqrt_method() {
 	var x;
 	y = Csolve_triangle(S.T(),b);
 	x = Csolve_triangle(S,y);
-	var html = '\\(A= '+C.tex()+' = '+S.T().Ctex()+'\\cdot '+S.Ctex()+'\\)<br><br>'+
-	'\\('+S.T().Ctex()+'\\cdot y='+b.tex()+' ~~~\\Rightarrow~~~ y = '+y.Ctex()+'\\)<br><br>'
-	+'\\('+S.Ctex()+'\\cdot x ='+y.Ctex()+'~~~\\Rightarrow~~~ x = '+x.Ctex()+'\\)<br><br>'+
-	'Точное решение \\(x^*=A^{-1}b = '+C.invert().mult(b).tex()+'\\)';
+	var html = '\\(A= '+C.tex(digits)+' = '+S.T().Ctex(digits)+'\\cdot '+S.Ctex(digits)+'\\)<br><br>'+
+	'\\('+S.T().Ctex(digits)+'\\cdot y='+b.tex(digits)+' ~~~\\Rightarrow~~~ y = '+y.Ctex(digits)+'\\)<br><br>'
+	+'\\('+S.Ctex(digits)+'\\cdot x ='+y.Ctex(digits)+'~~~\\Rightarrow~~~ x = '+x.Ctex(digits)+'\\)<br><br>'+
+	'Точное решение \\(x^*=A^{-1}b = '+C.invert().mult(b).tex(digits)+'\\)';
 	output.innerHTML = html;
 	MathJax.typeset();
 }
