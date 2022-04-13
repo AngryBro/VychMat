@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>Калькулятор систем</title>
+		<link rel="stylesheet" href="style.css"></link>
+		<script src='script/casual_gaus.js'></script>
+		<script src='script/LU_transform.js'></script>
+		<script src='script/matrix.js'></script>
+		<script src='script/method_selection.js'></script>
+		<script src='script/check_input.js'></script>
+		<script src='script/random_input.js'></script>
+		<script src='script/complex_number.js'></script>
+		<script src='script/sqrt_method.js'></script>
+		<script src='script/slau.js'></script>
+		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		Система \(Ax=b\).<br>
+		Метод решения:
+		<select onchange="select_method(this,'button','random')">
+			<option value=''>&mdash;</option>
+			<option value='casual_gaus(digits.value)'>Обычный метод Гаусса</option>
+			<option value='LU_transform(digits.value)'>Через LU разложение</option>
+			<option value='sqrt_method(digits.value)'>Метод квадратного корня</option>
+			<option value='QR_transform(digits.value)'>Метод квадратного корня</option>
+		</select><br><br>
+		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width=1cm" type="number" id="digits" value="3">
+		</textarea><br><br>
+		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
+		<button id='random' onclick="">random()</button>
+		<br><br><button id='button' onclick="">Вычислить \(x\)</button><br><br>
+		<div id="output"></div>
+	</body>
+</html>
