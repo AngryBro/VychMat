@@ -4,6 +4,7 @@
 		<link rel="stylesheet" href="style.css"></link>
 		<script src='script/casual_gaus.js'></script>
 		<script src='script/LU_transform.js'></script>
+		<script src='script/QR_transform.js'></script>
 		<script src='script/matrix.js'></script>
 		<script src='script/method_selection.js'></script>
 		<script src='script/check_input.js'></script>
@@ -11,6 +12,7 @@
 		<script src='script/complex_number.js'></script>
 		<script src='script/sqrt_method.js'></script>
 		<script src='script/slau.js'></script>
+		<script src='script/edging_method.js'></script>
 		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
 	<body>
@@ -21,7 +23,8 @@
 			<option value='casual_gaus(digits.value)'>Обычный метод Гаусса</option>
 			<option value='LU_transform(digits.value)'>Через LU разложение</option>
 			<option value='sqrt_method(digits.value)'>Метод квадратного корня</option>
-			<option value='QR_transform(digits.value)'>Метод квадратного корня</option>
+			<option value='QR_transform(digits.value)'>Через QR разложение</option>
+			<option value='edging_method()'>Метод окаймления</option>
 		</select><br><br>
 		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width=1cm" type="number" id="digits" value="3">
 		</textarea><br><br>
