@@ -16,8 +16,8 @@ function LU_transform(digits) {
 	var y = x.copy();
 	y = solve_triangle(L,b);
 	x = solve_triangle(U,y);
-	var html = '\\(A='+A.tex(digits)+'='+L.tex(digits)+'\\cdot '+U.tex(digits)+
-	'\\)<br><br>'+
+	var html = '\\(A='+A.tex(digits)+',~~~b='+b.tex(digits)+'\\)<br><br>'+
+	'\\(A ='+L.tex(digits)+'\\cdot '+U.tex(digits)+'\\)<br><br>'+
 	'\\('+L.tex(digits)+'\\cdot y ='+b.tex(digits)+'~~~\\Rightarrow ~~~ y ='+y.tex(digits)+'\\)<br><br>'+
 	'\\('+U.tex(digits)+'\\cdot x ='+y.tex(digits)+'~~~\\Rightarrow ~~~ x='+x.tex(digits)+
 	'\\)<br><br>Точное решение \\(x^*=A^{-1}b='+
