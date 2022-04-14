@@ -25,9 +25,13 @@
 			<option value='sqrt_method(digits.value)'>Метод квадратного корня</option>
 			<option value='QR_transform(digits.value)'>Через QR разложение</option>
 			<option value='edging_method(digits.value)'>Метод окаймления</option>
+			<option value='simple_iteration(digits.value)'>Метод простой итерации</option>
 		</select><br><br>
-		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width=1cm" type="number" id="digits" value="3">
+		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width:1cm;vertical-align:middle" type="number" id="digits" value="3">
 		</textarea><br><br>
+		<div id='eps_div' hidden>
+			\(\varepsilon = ~\)<textarea id='eps' style='font-size:25;width:2cm;vertical-align:middle'></textarea>
+		</div><br>
 		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		<button id='random' onclick="">random()</button>
