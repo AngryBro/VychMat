@@ -617,4 +617,16 @@ class Matrix {
 		}
 		return m;
 	}
+	vector_norm() {
+		if(this.size.n!=1) {
+			console.log('Not a vector');
+			return undefined;
+		}
+		var m = Math.abs(this.get(1));
+		for(var i = 2; i<=this.size.m; i++) {
+			var vi = Math.abs(this.get(i));
+			m = m>vi?m:vi;
+		}
+		return m;
+	}
 }
