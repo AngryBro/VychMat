@@ -61,7 +61,7 @@ function zeydel_iteration(digits) {
 	'Количество итераций: '+iter+'<br><br>'+
 	'Точное решение \\(x^* = A^{-1} b='+x_star.tex(digits)+'\\)<br><br>'+
 	'\\(x - x^* ='+solution.dif(x_star).tex(digits)+'\\)<br><br>'+
-	'\\(||x - x^*|| = '+solution.dif(x_star).vector_norm()+'\\)';
+	'\\(\\|x - x^*\\| = '+solution.dif(x_star).vector_norm()+'\\)';
 	output.innerHTML = html;
 	MathJax.typeset();
 }
