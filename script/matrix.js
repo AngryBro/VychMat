@@ -309,7 +309,7 @@ class Matrix {
 		return new Matrix('array',arr);
 	}
 	mult(m_) {
-		if(m_==JSON.stringify(m_)) {
+		if(typeof(m_)=='number') {
 			var arr = JSON.parse(JSON.stringify(this.array));
 			for(var i = 0; i<arr.length; i++) {
 				for(var j = 0; j<arr[0].length; j++) {
