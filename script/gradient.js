@@ -17,6 +17,10 @@ function gradient_iteration(digits) {
 		x[k] = x[k-1].dif(A.T().mult(r[k-1]).mult(delta[k-1]));
 		r[k] = A.mult(x[k]).dif(b);
 		delta[k] = r[k].mult(AAT.mult(r[k])) / AAT.mult(r[k]).mult(AAT.mult(r[k]));
+		if(x.length>100000) {
+			console.log('Too many iterations');
+			return;
+		}
 	}
 	var iter = x.length;
 	var solution = x[iter-1];

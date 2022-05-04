@@ -16,6 +16,7 @@
 		<script src='script/zeydel.js'></script>
 		<script src='script/simple_iteration.js'></script>
 		<script src='script/gradient.js'></script>
+		<script src='script/relaxation.js'></script>
 		<script src='script/sample_code.js'></script>
 		<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	</head>
@@ -31,13 +32,26 @@
 			<option value='edging_method(digits.value)'>Метод окаймления</option>
 			<option value='simple_iteration(digits.value)'>Метод простой итерации</option>
 			<option value='zeydel_iteration(digits.value)'>Метод Зейделя</option>
+			<option value='relaxation_iteration(digits.value)'>Метод релаксации</option>
 			<option value='gradient_iteration(digits.value)'>Метод градиентного спуска</option>
 		</select><br><br>
-		Знаков после запятой<textarea style="font-size:25;margin-left:1cm;width:1cm;vertical-align:middle" type="number" id="digits" value="3">
-		</textarea><br><br>
-		<div id='eps_div' hidden>
-			\(\varepsilon = ~\)<textarea id='eps' style='font-size:25;width:2cm;vertical-align:middle'></textarea>
-		</div><br>
+		Знаков после запятой<input type='number' style="font-size:25;margin-left:1cm;width:1cm;vertical-align:middle" type="number" id="digits" value="3">
+		</input><br><br>
+		<table style='font-size:35'>
+			<tr>
+				<td>
+					<div id='eps_div' hidden>
+						\(\varepsilon = ~\)<textarea id='eps' style='font-size:25;width:2cm;vertical-align:middle'></textarea>
+					</div>
+				</td>
+				<td>
+					<div id='omega_div' hidden>
+						\(\omega = ~\)<textarea id='omega' style='font-size:25;width:2cm;vertical-align:middle'></textarea>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<br>
 		\(A =\) <textarea id='matrix_A' style="width:3cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		\(b =\) <textarea id='vector_b' style="width:1cm;height:3cm;vertical-align:middle;font-size:30"></textarea>
 		<button id='random' onclick="">random()</button>
