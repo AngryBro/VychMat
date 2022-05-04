@@ -322,8 +322,11 @@ class Matrix {
 			var _m_ = this.size.m;
 			var _n_ = this.size.n;
 			var _k_ = m_.size.n;
+			if((_n_==_k_)&&(_n_==1)) {
+				return this.T().mult(m_).get(1,1);
+			}
 			if(_n_!=m_.size.m) {
-				console.log('ERROR: Inconsistent matrices');
+				console.log('ERROR: Inconsistent matrixes');
 				return new Matrix('NaN');
 			}
 			else {
