@@ -5,7 +5,7 @@ function random_input(id_A,id_b,abs) {
 	var n = Math.round((Math.random()*6)+2);
 	var A = Matrix.random(n,n,-abs,abs,digits);
 	for(var i = 1; i<=n; i++) {
-		var s = 0
+		var s = 0;
 		for(var j = 1; j<=n; j++) {
 			s+=Math.abs(A.get(j,i));
 		}

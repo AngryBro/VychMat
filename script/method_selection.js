@@ -8,6 +8,12 @@ function select_method(select,button,random) {
 			rnd_button.setAttribute('onclick',"random_symmetry_pd('matrix_A','vector_b',20)");
 			break;
 		}
+		case 'rotation(digits.value)': {
+			rnd_button.setAttribute('onclick',"random_symmetry_pd('matrix_A','vector_b',20)");
+			document.getElementById('vector_b').hidden = true;
+			document.getElementById('b=').hidden = true;
+			break;
+		}
 		default: {
 			rnd_button.setAttribute('onclick',"random_input('matrix_A','vector_b',20)");
 		}
