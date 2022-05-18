@@ -8,7 +8,7 @@ function select_method(select,button,random) {
 			rnd_button.setAttribute('onclick',"random_symmetry_pd('matrix_A','vector_b',20)");
 			break;
 		}
-		case 'rotation(digits.value)': {
+		case 'rotation_iteration(digits.value)': {
 			rnd_button.setAttribute('onclick',"random_symmetry_pd('matrix_A','vector_b',20)");
 			document.getElementById('vector_b').hidden = true;
 			document.getElementById('b=').hidden = true;
