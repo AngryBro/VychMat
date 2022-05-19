@@ -91,6 +91,9 @@ class Matrix {
 	}
 	static input(id) {
 		var rows_raw = document.getElementById(id).value.split('\n');
+		if(rows_raw[0].length==0) {
+			return new Matrix('0',1,1);
+		}
 		var rows = [];
 		for(var i = 0; i<rows_raw.length;i++) {
 			if(rows_raw[i].replace(/\s+/,"")!="") {
