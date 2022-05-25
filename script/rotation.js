@@ -2,7 +2,7 @@ function rotation_iteration(digits) {
 	eval(input_iter);
 	var sigma = [];
 	A = [A.copy()];
-	var p = Math.ceil(-Math.log(eps)/Math.LN10);
+	var p = Math.ceil(Math.log(1/eps)/Math.LN10)+1;
 	var i,j;
 	var m = 0;
 	var aij;
@@ -17,8 +17,8 @@ function rotation_iteration(digits) {
 		sigma[k] = Math.sqrt(sigma[k])*Math.pow(10,-k);
 		var found = false;
 		for(var i_ = 1; i_<=n; i_++) {
-			for(var j_ = 1; j_<=n; j_++) {
-				if((Math.abs(A[m].get(i_,j_))>aij)&&(i_!=j_)&&(Math.abs(A[m].get(i_,j_))>=sigma[k])) {
+			for(var j_ = i_+1; j_<=n; j_++) {
+				if(Math.abs(A[m].get(i_,j_))>aij) {
 					aij = Math.abs(A[m].get(i_,j_));
 					i = i_;
 					j = j_;
@@ -55,8 +55,10 @@ function rotation_iteration(digits) {
 		A[m+1].set(j,i,0);
 		m++;
 	}
-	A[m].log();
+	for(var i = 0; i<A.length; i++) {
+		A[i].log();
+	}
 }
 function sgn(x) {
-	return x>0?1:(x<0?-1:0);
+	return x>=0?1:-1;
 }
