@@ -7,10 +7,10 @@ function simple_iteration_2(digits) {
 	var iter = 1;
 	//Start
 	x[0] = new Matrix('0',n,1);
-	for(var i = 1; i<=n; i++) {
-		x[0].set(i,1);
-	}
-	//x[0].set(1,1);
+	// for(var i = 1; i<=n; i++) {
+	// 	x[0].set(i,1);
+	// }
+	x[0].set(1,1);
 	y[1] = A.mult(x[0]);
 	lambda[1] = y[1].mult(x[0]);
 	x[1] = y[1].mult(1/Math.sqrt(y[1].mult(y[1])));
@@ -35,7 +35,7 @@ function simple_iteration_2(digits) {
 		x: x[iter]
 	};
 	var html = '\\(A = '+A.tex()+',~~~\\varepsilon = '+eps+'\\)<br><br>'+
-	'\\(\\lambda = '+solution.lambda+',~~~ x = '+solution.x.tex(digits)+'\\)<br><br>'+
+	'\\(\\lambda_{|max|}(A) = '+solution.lambda+',~~~ x = '+solution.x.tex(digits)+'\\)<br><br>'+
 	'Количество итераций: '+iter;
 	output.innerHTML = html;
 	MathJax.typeset();
