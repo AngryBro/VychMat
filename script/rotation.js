@@ -55,9 +55,15 @@ function rotation_iteration(digits) {
 		A[m+1].set(j,i,0);
 		m++;
 	}
-	for(var i = 0; i<A.length; i++) {
-		A[i].log();
+	lambda = new Matrix('0',n,1);
+	for(var i =1; i<=n; i++) {
+		lambda.set(i,A[m].get(i,i));
 	}
+	var html = '\\(A= '+A[0].tex(digits)+'\\)<br><br>'+
+	'\\(A_m= '+A[m].tex(digits)+'\\)<br><br>'+
+	'\\(\\lambda(A) = '+lambda.tex(digits)+'\\)';
+	output.innerHTML = html;
+	MathJax.typeset();
 }
 function sgn(x) {
 	return x>=0?1:-1;
