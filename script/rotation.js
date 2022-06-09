@@ -1,36 +1,37 @@
 function rotation_iteration(digits) {
 	eval(input_iter);
-	var sigma = [];
+	var sigma = [null];
 	A = [A.copy()];
+	var A0 = A[0].copy();
 //	var p = Math.ceil(Math.log(1/eps)/Math.LN10)+1;
-	var p = 10;
-	var m = 0;
+	var p = 4;
 	var aij;
- 	for(var k = 0; k<=p; k++) {
+ 	for(var k = 1; k<=p; k++) {
 		var i=0;
 		aij = -1;
 		var j = 0;
-		while(true) {
-		sigma.push(0);
-		for(var i = 1; i<=n; i++) {
-			if(Math.abs(A[m].get(i,i))>sigma[k]) {
-				sigma[k] = Math.abs(A[m].get(i,i));
-			}
-		}
-		sigma[k] = Math.sqrt(sigma[k])/Math.pow(10,k);
 		for(var i_ = 1; i_<n; i_++) {
 			for(var j_ = i_+1; j_<=n; j_++) {
-				if(Math.abs(A[m].get(i_,j_))>=aij) {
-					aij = Math.abs(A[m].get(i_,j_));
+				if((Math.abs(A[0].get(i_,j_))>=aij)&&(i_<=n)&&(j_<=n)) {
+					aij = Math.abs(A[0].get(i_,j_));
 					i = i_;
 					j = j_;
 				}
 			}
 		}
-		if(aij<sigma[k]) {
-			break;
+		sigma.push(0);
+		for(var i_ = 1; i_<=n; i_++) {
+			if(Math.abs(A[0].get(i_,i_))>sigma[k]) {
+				sigma[k] = Math.abs(A[0].get(i_,i_));
+			}
 		}
-		if(m>10000) break;
+		sigma[k] = Math.sqrt(sigma[k])/Math.pow(10,k);
+		for(var m = 0; aij>sigma[k]; m++) {
+		// if(aij<sigma[k]) {
+		// 	break;
+		// }
+		
+		if(m>100) break;
 		var d = Math.sqrt((A[m].get(i,i)-A[m].get(j,j))*(A[m].get(i,i)-A[m].get(j,j))+4*A[m].get(i,j)*A[m].get(i,j));
 		var c = Math.sqrt(1/2*(1+Math.abs(A[m].get(i,i)-A[m].get(j,j))/d));
 		var s = sgn(A[m].get(i,j)*(A[m].get(i,i)-A[m].get(j,j)))*
@@ -55,15 +56,39 @@ function rotation_iteration(digits) {
 		A[m+1].set(j,j,s*s*A[m].get(i,i)-2*c*s*A[m].get(i,j)+c*c*A[m].get(j,j));
 		A[m+1].set(i,j,0);
 		A[m+1].set(j,i,0);
-		m++;
+		A[m+1].log();
+		i=0;
+		aij = -1;
+		j = 0;
+		for(var i_ = 1; i_<n; i_++) {
+			for(var j_ = i_+1; j_<=n; j_++) {
+				if((Math.abs(A[m+1].get(i_,j_))>=aij)&&(i_<=n)&&(j_<=n)) {
+					aij = Math.abs(A[m+1].get(i_,j_));
+					i = i_;
+					j = j_;
+				}
+			}
 		}
+
+		for(var i_ = 1; i_<=n; i_++) {
+			if(Math.abs(A[A.length-1].get(i_,i_))>sigma[k]) {
+				sigma[k] = Math.abs(A[A.length-1].get(i_,i_));
+			}
+		}
+		sigma[k] = Math.sqrt(sigma[k])/Math.pow(10,k);
+
+		 }
+	A = [A[A.length-1].copy()];
+
+
+
 	}
 	lambda = new Matrix('0',n,1);
-	for(var i =1; i<=n; i++) {
-		lambda.set(i,A[m].get(i,i));
+	for(var i_ =1; i_<=n; i_++) {
+		lambda.set(i_,A[0].get(i_,i_));
 	}
-	var html = '\\(A= '+A[0].tex(digits)+'\\)<br><br>'+
-	'\\(A_m= '+A[m].tex(digits)+'\\)<br><br>'+
+	var html = '\\(A= '+A0.tex(digits)+'\\)<br><br>'+
+	'\\(A_m= '+A[0].tex(digits)+'\\)<br><br>'+
 	'\\(\\lambda(A) = '+lambda.tex(digits)+'\\)<br><br>';
 	output.innerHTML = html;
 	MathJax.typeset();
