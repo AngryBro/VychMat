@@ -37,6 +37,15 @@ function select_method(select,button,random) {
 //			rnd_button.setAttribute('onclick',"random_input('matrix_A','vector_b',20)");
 			break;
 		}
+		case 'invert_iteration(digits.value)': {
+			document.getElementById('vector_b').hidden = true;
+			document.getElementById('b=').hidden = true;
+			document.getElementById('eps').hidden = false;
+			document.getElementById('eps_div').hidden = false;
+			rnd_button.setAttribute('onclick',"random_symmetry_pd('matrix_A','vector_b',20)");
+//			rnd_button.setAttribute('onclick',"random_input('matrix_A','vector_b',20)");
+			break;
+		}
 		default: {
 			document.getElementById('vector_b').hidden = false;
 			document.getElementById('b=').hidden = false;
